@@ -1,0 +1,18 @@
+plugins {
+    id 'war'
+    id 'org.gretty' version '4.1.6'
+}
+
+repositories {
+    mavenCentral()
+}
+
+gretty {
+    httpPort = 8080
+    contextPath = '/'
+    servletContainer = 'jetty11' // 'tomcat10'
+    jvmArgs = [
+        '-XX:+AllowEnhancedClassRedefinition',
+        '-XX:HotswapAgent=fatjar'
+    ]
+}
