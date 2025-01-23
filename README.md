@@ -2,42 +2,37 @@
 
 ## Steps for reproducing the issue:
    
-1.  Make sure you use JetBrains Java 17:
+ 1. Make sure you use JetBrains Java 17:
     ```
     java -version
     ```
    
-   The output should be something like this:
+    The output should be something like this:
+   
     ```
     openjdk version "17.0.12" 2024-07-16
     OpenJDK Runtime Environment JBR-17.0.12+1-1087.25-jcef (build 17.0.12+1-b1087.25)
     OpenJDK 64-Bit Server VM JBR-17.0.12+1-1087.25-jcef (build 17.0.12+1-b1087.25, mixed mode)
     ```
    
-2. Clone and start the application:
+ 2. Clone and start the application:
     ```
     git clone git@github.com:haba713/hotswapagent-gretty-issue.git
     cd hotswapagent-gretty-issue/
     ./gradlew appRun
     ```
    
-   See the exception:
-    ```
-    ERROR (org.hotswap.agent.annotation.handler.PluginClassFileTransformer) - InvocationTargetException in transform method on plugin 'class org.hotswap.agent.plugin.jetty.JettyPlugin' class 'org/eclipse/jetty/webapp/WebXmlConfiguration' of classLoader 'java.net.URLClassLoader'
-    ```
+    See the exception: `ERROR (org.hotswap.agent.annotation.handler.PluginClassFileTransformer) - InvocationTargetException in transform method on plugin 'class org.hotswap.agent.plugin.jetty.JettyPlugin' class 'org/eclipse/jetty/webapp/WebXmlConfiguration' of classLoader 'java.net.URLClassLoader'`
    
-3.  In [build.gradle], change the servlet container:
+ 3. In [build.gradle], change the servlet container:
     `servletContainer = 'jetty11'` → `servletContainer = 'tomcat10'`
    
-4.  Start the application:
+ 4. Start the application:
     ```
     ./gradlew appRun
     ```
    
-   See the exception:
-    ```
-    ERROR (org.hotswap.agent.annotation.handler.PluginClassFileTransformer) - InvocationTargetException in transform method on plugin 'class org.hotswap.agent.plugin.tomcat.TomcatPlugin' class 'org/apache/catalina/webresources/StandardRoot' of classLoader 'java.net.URLClassLoader'
-    ```
+    See the exception: `ERROR (org.hotswap.agent.annotation.handler.PluginClassFileTransformer) - InvocationTargetException in transform method on plugin 'class org.hotswap.agent.plugin.tomcat.TomcatPlugin' class 'org/apache/catalina/webresources/StandardRoot' of classLoader 'java.net.URLClassLoader'`
 
 ## Environment
 
